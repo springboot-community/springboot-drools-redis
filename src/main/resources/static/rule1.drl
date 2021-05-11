@@ -1,0 +1,20 @@
+package helloworld
+import io.springboot.drools.model.Employee
+
+rule "rule_1"
+    when
+        eval(true)
+    then
+        System.out.println("规则 ：rule1 .");
+end
+//不带参数的查询
+//当前query用于查询Working Memory中salary <= 10000的Employee对象
+query "query_1"
+    $employee:Employee(salary <= 10000)
+end
+
+//带有参数的查询
+//当前query用于查询Working Memory中year>3同时name需要和传递的参数name相同的employee对象
+query "query_2"(String ename)
+    $employee:Employee(year > 3 && name == ename)
+end

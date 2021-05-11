@@ -1,0 +1,22 @@
+package helloworld
+rule "rule_helloworld"
+    /*
+    salience：设置当前规则的执行优先级，数值越大越优先执行，默认值为0.
+    因为当前规则的匹配条件和下面规则的匹配条件相同，为了保证先执行当前规则，需要设置优先级
+    */
+    salience 3
+    when
+        eval(true)
+    then
+        System.out.println("本地规则：HelloWorld ！");
+end
+rule "520"
+    //date-effective 开始时间
+    //date-expires 结束时间
+    date-effective "2021-05-20 05:20:00"
+    date-expires "2021-05-20 23:59:59"
+    when
+        eval(true)
+    then
+        System.out.println("情人节快乐");
+end

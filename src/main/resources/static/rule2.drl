@@ -1,0 +1,32 @@
+package helloworld
+
+import io.springboot.drools.model.Employee
+
+rule "rule_2"
+    salience 10
+    when
+        eval(true)
+    then
+        System.out.println("规则 ：rule2 .");
+end
+
+rule "rule_employee_dismiss"
+    agenda-group "group-rule1"
+    when
+        $employee:Employee(age > 35)
+    then
+        System.out.println("ID 为 "+ $employee.getId() + " 的 "+ $employee.getName() + "年龄超过35岁需要被开除了");
+end
+//no-loop true 很关键 不加就一直循环涨到到工资10100 老板必不可能这么好
+//agenda-group "xxx" 议程分组
+rule "rule_employee_raise"
+    agenda-group "group-rule2"
+    no-loop true
+    when
+        $employee:Employee(year >= 3 && salary <= 10000)
+    then
+        System.out.println("抠门公司准备给员工ID="+$employee.getId()+" ,名字= "+$employee.getName()+" 加薪");
+        $employee.setSalary($employee.getSalary() + 100);
+        update($employee);
+
+end
